@@ -2,12 +2,12 @@
 {% block title %}Ripley — Search{% endblock %}
 
 {% block content %}
-<section class="card">
-    <h3 class="card-title">search for anything</h3>
+<section class="card search-primary">
+    <h1 class="page-title">Find a film or show</h1>
     <form action="/search" method="get">
         <div class="search-row">
-            <input class="form-input" id="query" type="text" name="query" placeholder="search for a show, film, or anything…" required autofocus>
-            <button type="submit" class="btn btn-primary">search</button>
+            <input class="form-input" id="query" aria-label="Search torrents" type="text" name="query" placeholder="Title, year or episode…" required autofocus>
+            <button type="submit" class="btn btn-primary">Search</button>
         </div>
     </form>
     {% if vpn_bypass %}
@@ -16,20 +16,20 @@
 </section>
 
 <section class="card">
-    <h3 class="card-title">paste a magnet link</h3>
+    <h2 class="card-title">Have a magnet link?</h2>
     <form action="/download-magnet" method="post">
         <div class="search-row">
-            <input class="form-input" type="text" name="magnet" placeholder="magnet:?xt=urn:btih:…" required>
-            <button type="submit" class="btn btn-primary">download</button>
+            <input class="form-input" aria-label="Magnet link" type="text" name="magnet" placeholder="magnet:?xt=urn:btih:…" required>
+            <button type="submit" class="btn">Download</button>
         </div>
     </form>
 </section>
 
 <section class="card">
-    <h3 class="card-title">download location</h3>
+    <h2 class="card-title">Download location</h2>
     <form action="/set-download-dir" method="post" class="inline-form">
-        <input class="form-input" type="text" name="download_dir" value="{{ download_dir }}" required>
-        <button type="submit" class="btn">change</button>
+        <input class="form-input" aria-label="Download location" type="text" name="download_dir" value="{{ download_dir }}" required>
+        <button type="submit" class="btn">Change</button>
     </form>
 </section>
 {% endblock %}
