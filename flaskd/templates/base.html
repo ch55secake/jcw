@@ -18,10 +18,10 @@
         <span></span><span></span><span></span>
     </button>
     <nav class="nav" id="navigation" aria-label="Main navigation">
-        <a href="/" class="{{ 'active' if request.endpoint in ('home', 'search') }}"><span class="nav-symbol" aria-hidden="true">⌕</span>Search</a>
-        <a href="/active-downloads" class="{{ 'active' if request.endpoint == 'active_downloads' }}"><span class="nav-symbol" aria-hidden="true">↓</span>Downloads</a>
-        <a href="/download-history" class="{{ 'active' if request.endpoint == 'download_history' }}"><span class="nav-symbol" aria-hidden="true">↶</span>History</a>
-        <a href="/advanced-settings" class="{{ 'active' if request.endpoint == 'advanced_settings' }}"><span class="nav-symbol" aria-hidden="true">≡</span>Settings</a>
+        <a href="/" class="{{ 'active' if request.endpoint in ('home', 'search') }}"><svg class="nav-icon" viewBox="0 0 24 24" aria-hidden="true"><circle cx="10.5" cy="10.5" r="6.5"/><path d="m16 16 5 5"/></svg>Search</a>
+        <a href="/active-downloads" class="{{ 'active' if request.endpoint == 'active_downloads' }}"><svg class="nav-icon" viewBox="0 0 24 24" aria-hidden="true"><path d="M12 3v12m-5-5 5 5 5-5M4 16v5h16v-5"/></svg>Downloads</a>
+        <a href="/download-history" class="{{ 'active' if request.endpoint == 'download_history' }}"><svg class="nav-icon" viewBox="0 0 24 24" aria-hidden="true"><path d="M3 10a9 9 0 1 1 1 7M3 4v6h6m3-4v6l4 2"/></svg>History</a>
+        <a href="/advanced-settings" class="{{ 'active' if request.endpoint == 'advanced_settings' }}"><svg class="nav-icon" viewBox="0 0 24 24" aria-hidden="true"><path d="M4 7h6m4 0h6M4 17h10m4 0h2"/><circle cx="12" cy="7" r="2"/><circle cx="16" cy="17" r="2"/></svg>Settings</a>
         <a class="nav-external" href="http://{{ qbit_host }}:9000" target="_blank" rel="noopener noreferrer">qBittorrent <span aria-hidden="true">↗</span></a>
     </nav>
 </header>
