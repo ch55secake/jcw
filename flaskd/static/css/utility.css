@@ -147,6 +147,29 @@ button, input, select { font: inherit; }
     .modal-footer .btn { min-height: 44px; }
     .empty-state { padding: 28px 20px; }
 }
+.catalogue-tabs { display: flex; gap: 24px; border-bottom: 1px solid var(--line); margin: 24px 0; }
+.catalogue-tabs a { padding: 10px 0; color: var(--muted); border-bottom: 2px solid transparent; }
+.catalogue-tabs a[aria-current] { color: var(--ink); border-color: var(--ink); }
+.catalogue-heading { display: flex; justify-content: space-between; align-items: baseline; gap: 16px; margin-bottom: 20px; }
+.catalogue-heading h2 { font-size: 15px; font-weight: 500; }
+.catalogue-heading span { color: var(--muted); font-size: 11px; }
+.poster-grid { display: grid; grid-template-columns: repeat(auto-fill, minmax(145px, 1fr)); gap: 28px 18px; }
+.poster-card { min-width: 0; color: var(--ink); }
+.poster-card:hover { text-decoration: none; }
+.poster-art { position: relative; aspect-ratio: 2 / 3; background: #191919; border: 1px solid var(--line); border-radius: 6px; overflow: hidden; }
+.poster-art span { position: absolute; inset: 16px; display: grid; place-items: center; color: var(--muted); text-align: center; overflow-wrap: anywhere; }
+.poster-art img { position: absolute; inset: 0; width: 100%; height: 100%; object-fit: cover; }
+.poster-card:hover .poster-art { border-color: #888; }
+.poster-card h3 { font-size: 13px; font-weight: 500; margin-top: 10px; overflow-wrap: anywhere; }
+.poster-card p { color: var(--muted); font-size: 12px; margin-top: 3px; }
+.back-link { display: inline-block; margin-bottom: 30px; font-size: 13px; color: var(--muted); }
+.title-detail { display: grid; grid-template-columns: minmax(160px, 240px) 1fr; gap: 36px; align-items: start; }
+.title-description { color: #bbb; line-height: 1.8; margin-bottom: 28px; }
+@media (max-width: 520px) {
+    .poster-grid { grid-template-columns: repeat(2, minmax(0, 1fr)); gap: 24px 14px; }
+    .title-detail { grid-template-columns: 1fr; gap: 24px; }
+    .title-detail > .poster-art { width: 160px; }
+}
 @media (prefers-reduced-motion: reduce) {
     *, *::before, *::after { transition: none !important; animation: none !important; }
 }
