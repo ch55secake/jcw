@@ -2,7 +2,8 @@
 {% block title %}Download History{% endblock %}
 
 {% block content %}
-<h1 class="page-title">Download history</h1>
+<p class="eyebrow">Previously downloaded</p>
+<h1 class="page-title">History</h1>
 <p class="page-subtitle">Select a file to open it.</p>
 
 {% if downloads %}
@@ -12,15 +13,16 @@
     <div class="file-actions">
         <form action="/delete-file" method="post" onsubmit="return confirm('Delete this file?')">
             <input type="hidden" name="filename" value="{{ download }}">
-            <button type="submit" class="btn btn-sm btn-danger">delete</button>
+            <button type="submit" class="btn btn-sm btn-danger">Delete</button>
         </form>
     </div>
 </div>
 {% endfor %}
 {% else %}
 <div class="empty-state">
-    <div class="empty-icon">📂</div>
-    <p>no downloaded files found</p>
+    <h2>Nothing here yet.</h2>
+    <p>Your downloaded files will appear here.</p>
+    <a class="btn" href="/">Find something to download →</a>
 </div>
 {% endif %}
 {% endblock %}

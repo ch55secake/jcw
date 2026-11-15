@@ -2,14 +2,15 @@
 {% block title %}results for {{ query }}{% endblock %}
 
 {% block content %}
-<h1 class="page-title">Results for “{{ query }}”</h1>
+<p class="eyebrow">Search / Results</p>
+<h1 class="page-title">{{ query }}</h1>
 <form action="/search" method="get" class="search-row results-search">
     <input class="form-input" name="query" value="{{ query }}" aria-label="Search torrents" required>
     <button class="btn btn-primary" type="submit">Search</button>
 </form>
 <p class="page-subtitle">page {{ page }} · {{ results|length }} results from multiple sources</p>
 
-<div class="card" style="margin-bottom:16px; padding:12px 16px;">
+<div class="results-toolbar">
     <label for="filter-input" class="form-label">Filter this page</label>
     <input class="form-input" type="text" id="filter-input" placeholder="For example, S02E01…">
     <p id="filter-empty" hidden>No matching results on this page.</p>
@@ -19,12 +20,12 @@
     <table class="results-table">
         <thead>
             <tr>
-                <th class="col-name">name</th>
-                <th>seeds</th>
-                <th>leech</th>
-                <th>size</th>
-                <th>from</th>
-                <th class="col-action">action</th>
+                <th class="col-name">Title</th>
+                <th>Seeds</th>
+                <th>Peers</th>
+                <th>Size</th>
+                <th>Uploader</th>
+                <th class="col-action">Action</th>
             </tr>
         </thead>
         <tbody>
@@ -63,7 +64,8 @@
 {% if not results %}
 <div class="empty-state">
     <div class="empty-icon">🔍</div>
-    <p>no results found — try a different search</p>
+    <h2>No matches this time.</h2>
+    <p>Try a different title or a broader search.</p>
 </div>
 {% endif %}
 
@@ -71,12 +73,12 @@
     <form action="/search" method="get">
         <input type="hidden" name="query" value="{{ query }}">
         <input type="hidden" name="page" value="{{ page - 1 }}">
-        <button type="submit" class="btn" {% if page <= 1 %}disabled{% endif %}>← previous</button>
+        <button type="submit" class="btn" {% if page <= 1 %}disabled{% endif %}>← Previous</button>
     </form>
     <form action="/search" method="get">
         <input type="hidden" name="query" value="{{ query }}">
         <input type="hidden" name="page" value="{{ page + 1 }}">
-        <button type="submit" class="btn">next →</button>
+        <button type="submit" class="btn">Next →</button>
     </form>
 </div>
 

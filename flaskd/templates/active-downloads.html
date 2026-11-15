@@ -5,6 +5,7 @@
 {% endblock %}
 
 {% block content %}
+<p class="eyebrow">Your queue</p>
 <h1 class="page-title">Downloads</h1>
 <p class="page-subtitle" id="connection-status" role="status">Connecting…</p>
 <p id="action-error" class="notice notice-danger" role="alert" hidden></p>
@@ -92,7 +93,7 @@ var STATE_LABELS = {
 socket.on('update_downloads', function(downloads) {
     var container = document.getElementById('downloads-container');
     if (!downloads || downloads.length === 0) {
-        container.innerHTML = '<div class="empty-state"><div class="empty-icon">📭</div><p>no active downloads</p></div>';
+        container.innerHTML = '<div class="empty-state"><h2>Your queue is clear.</h2><p>Find something worth waiting for.</p><a class="btn" href="/">Search for a film or show →</a></div>';
         return;
     }
     container.innerHTML = '';

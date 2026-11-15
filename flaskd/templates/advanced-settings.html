@@ -2,11 +2,12 @@
 {% block title %}Settings{% endblock %}
 
 {% block content %}
+<p class="eyebrow">Make yourself at home</p>
 <h1 class="page-title">Settings</h1>
-<p class="page-subtitle">advanced configuration</p>
+<p class="page-subtitle">Connections, preferences and maintenance.</p>
 
 <div class="card">
-    <h3 class="card-title">general</h3>
+    <h2 class="card-title">General</h2>
     <form method="POST" action="/advanced-settings" id="settings-form">
         <div class="setting-row">
             <div class="setting-info">
@@ -23,7 +24,7 @@
 </div>
 
 <div class="card">
-    <h3 class="card-title">network interface</h3>
+    <h2 class="card-title">Network interface</h2>
     <p class="page-subtitle" style="margin-bottom:12px">choose which interface / IP the server listens on. requires a restart to take effect.</p>
     <form method="POST" action="/advanced-settings" id="nic-form">
         <input type="hidden" name="vpn_bypass" value="{{ 'on' if vpn_bypass else '' }}">
@@ -31,19 +32,19 @@
             <select name="bind_address" aria-label="Network interface" class="form-input" id="nic-select">
                 <option value="0.0.0.0" {{ 'selected' if bind_address == '0.0.0.0' }}>0.0.0.0 — all interfaces</option>
             </select>
-            <button type="submit" class="btn btn-primary">save</button>
+            <button type="submit" class="btn btn-primary">Save</button>
         </div>
     </form>
 </div>
 
 <div class="card">
-    <h3 class="card-title">tools</h3>
+    <h2 class="card-title">Maintenance</h2>
     <div class="setting-row">
         <div class="setting-info">
             <div class="setting-label">Fix Jellyfin directory</div>
             <div class="setting-desc">run chown on /media for jellyfin access</div>
         </div>
-        <a href="/jellyfin" class="btn btn-sm">run</a>
+        <a href="/jellyfin" class="btn btn-sm">Run</a>
     </div>
 </div>
 {% endblock %}

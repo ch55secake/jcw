@@ -3,7 +3,9 @@
 
 {% block content %}
 <section class="card search-primary">
-    <h1 class="page-title">Find a film or show</h1>
+    <p class="eyebrow">The search starts here</p>
+    <h1 class="page-title">What’s on<br>tonight?</h1>
+    <p class="search-intro">Find a film, follow a series, or pick up where you left off.</p>
     <form action="/search" method="get">
         <div class="search-row">
             <input class="form-input" id="query" aria-label="Search torrents" type="text" name="query" placeholder="Title, year or episode…" required autofocus>
@@ -15,7 +17,9 @@
     {% endif %}
 </section>
 
-<section class="card">
+<div class="search-secondary">
+<section class="card magnet-panel">
+    <span class="section-number" aria-hidden="true">01 / DIRECT DOWNLOAD</span>
     <h2 class="card-title">Have a magnet link?</h2>
     <form action="/download-magnet" method="post">
         <div class="search-row">
@@ -25,11 +29,13 @@
     </form>
 </section>
 
-<section class="card">
+<section class="card location-panel">
+    <span class="section-number" aria-hidden="true">02 / DESTINATION</span>
     <h2 class="card-title">Download location</h2>
     <form action="/set-download-dir" method="post" class="inline-form">
         <input class="form-input" aria-label="Download location" type="text" name="download_dir" value="{{ download_dir }}" required>
         <button type="submit" class="btn">Change</button>
     </form>
 </section>
+</div>
 {% endblock %}
