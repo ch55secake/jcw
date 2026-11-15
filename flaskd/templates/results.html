@@ -2,13 +2,12 @@
 {% block title %}results for {{ query }}{% endblock %}
 
 {% block content %}
-<p class="eyebrow">Search / Results</p>
 <h1 class="page-title">{{ query }}</h1>
 <form action="/search" method="get" class="search-row results-search">
     <input class="form-input" name="query" value="{{ query }}" aria-label="Search torrents" required>
     <button class="btn btn-primary" type="submit">Search</button>
 </form>
-<p class="page-subtitle">page {{ page }} · {{ results|length }} results from multiple sources</p>
+<p class="page-subtitle">Page {{ page }} · <span id="result-count" role="status">{{ results|length }} results</span></p>
 
 <div class="results-toolbar">
     <label for="filter-input" class="form-label">Filter this page</label>
@@ -41,7 +40,6 @@
                 data-url="{{ torrent.detail_url|default('') }}">
                 <td class="col-name" data-label="Name">
                     <button type="button" class="t-name" onclick="event.stopPropagation(); showDetail(this.closest('tr'))">{{ torrent.name }}</button>
-                    <br>
                     <span class="t-source source-{{ torrent.source|default('tpb')|lower }}">{{ torrent.source|default('TPB') }}</span>
                 </td>
                 <td class="col-seeds" data-label="Seeds">{{ torrent.seeders }}</td>
@@ -64,8 +62,8 @@
 {% if not results %}
 <div class="empty-state">
     <div class="empty-icon">🔍</div>
-    <h2>No matches this time.</h2>
-    <p>Try a different title or a broader search.</p>
+    <h2>No results</h2>
+    <p>Try a different search.</p>
 </div>
 {% endif %}
 
@@ -111,14 +109,17 @@
                 <span class="info-value" id="modal-source"></span>
             </div>
             <div style="margin-top: 14px;">
-                <label class="form-label">magnet link (click to copy)</label>
-                <div class="magnet-input" id="modal-magnet" onclick="copyMagnet()"></div>
+                <label class="form-label" for="modal-magnet">Magnet link</label>
+                <textarea class="magnet-input" id="modal-magnet" readonly rows="3"></textarea>
+                <button class="btn btn-sm" type="button" onclick="copyMagnet()">Copy link</button>
+                <span id="copy-status" role="status"></span>
             </div>
         </div>
         <div class="modal-footer">
-            <a id="modal-source-link" href="#" target="_blank" rel="noopener" class="btn">view on site ↗</a>
+            <a id="modal-source-link" href="#" target="_blank" rel="noopener" class="btn">View source ↗</a>
             <form id="modal-dl-form" action="/download-torrent" method="get">
                 <input type="hidden" name="magnet" id="modal-dl-magnet">
+                <input type="hidden" name="name" id="modal-dl-name">
                 <button type="submit" class="btn btn-primary">Download</button>
             </form>
         </div>
@@ -136,6 +137,8 @@ document.getElementById('filter-input').addEventListener('input', function() {
         row.style.display = name.indexOf(term) !== -1 ? '' : 'none';
     });
     document.getElementById('filter-empty').hidden = !rows.length || Array.from(rows).some(function(row) { return row.style.display !== 'none'; });
+    var count = Array.from(rows).filter(function(row) { return row.style.display !== 'none'; }).length;
+    document.getElementById('result-count').textContent = term ? count + ' of ' + rows.length + ' results' : rows.length + ' results';
 });
 
 var previousFocus;
@@ -147,8 +150,10 @@ function showDetail(row) {
     document.getElementById('modal-leechers').textContent = row.dataset.leechers;
     document.getElementById('modal-uploader').textContent = row.dataset.uploader;
     document.getElementById('modal-source').textContent = row.dataset.source;
-    document.getElementById('modal-magnet').textContent = row.dataset.magnet;
+    document.getElementById('modal-magnet').value = row.dataset.magnet;
+    document.getElementById('copy-status').textContent = '';
     document.getElementById('modal-dl-magnet').value = row.dataset.magnet;
+    document.getElementById('modal-dl-name').value = row.dataset.name;
 
     var link = document.getElementById('modal-source-link');
     if (row.dataset.url) {
@@ -168,18 +173,22 @@ function closeModal(e) {
     }
 }
 
-function copyMagnet() {
-    var text = document.getElementById('modal-magnet').textContent;
-    navigator.clipboard.writeText(text);
+async function copyMagnet() {
     var el = document.getElementById('modal-magnet');
-    var orig = el.textContent;
-    el.textContent = 'copied!';
-    setTimeout(function() { el.textContent = orig; }, 1200);
+    var status = document.getElementById('copy-status');
+    try {
+        await navigator.clipboard.writeText(el.value);
+        status.textContent = 'Copied';
+    } catch (error) {
+        el.focus();
+        el.select();
+        status.textContent = 'Copy the selected link manually.';
+    }
 }
 
 document.addEventListener('keydown', function(e) {
     if (e.key === 'Tab' && document.getElementById('modal-overlay').classList.contains('active')) {
-        var controls = Array.from(document.querySelectorAll('.modal button, .modal a[href], .modal input:not([type="hidden"])')).filter(function(el) { return el.offsetParent !== null; });
+        var controls = Array.from(document.querySelectorAll('.modal button, .modal a[href], .modal textarea, .modal input:not([type="hidden"])')).filter(function(el) { return el.offsetParent !== null; });
         var first = controls[0], last = controls[controls.length - 1];
         if (e.shiftKey && document.activeElement === first) { e.preventDefault(); last.focus(); }
         else if (!e.shiftKey && document.activeElement === last) { e.preventDefault(); first.focus(); }

@@ -5,7 +5,6 @@
 {% endblock %}
 
 {% block content %}
-<p class="eyebrow">Your queue</p>
 <h1 class="page-title">Downloads</h1>
 <p class="page-subtitle" id="connection-status" role="status">Connecting…</p>
 <p id="action-error" class="notice notice-danger" role="alert" hidden></p>
@@ -20,7 +19,7 @@
 {% block scripts %}
 <script>
 var socket = io();
-socket.on('connect', function() { document.getElementById('connection-status').textContent = 'Connected · Updates automatically'; });
+socket.on('connect', function() { document.getElementById('connection-status').textContent = 'Connected'; });
 socket.on('disconnect', function() { document.getElementById('connection-status').textContent = 'Disconnected · Reconnecting…'; });
 socket.on('connect_error', function() { document.getElementById('connection-status').textContent = 'Unable to connect · Retrying…'; });
 
@@ -93,7 +92,7 @@ var STATE_LABELS = {
 socket.on('update_downloads', function(downloads) {
     var container = document.getElementById('downloads-container');
     if (!downloads || downloads.length === 0) {
-        container.innerHTML = '<div class="empty-state"><h2>Your queue is clear.</h2><p>Find something worth waiting for.</p><a class="btn" href="/">Search for a film or show →</a></div>';
+        container.innerHTML = '<div class="empty-state"><h2>No active downloads</h2><a class="btn" href="/">Search</a></div>';
         return;
     }
     container.innerHTML = '';
@@ -118,8 +117,7 @@ socket.on('update_downloads', function(downloads) {
 
         var hint = '';
         if (d.state === 'metaDL') {
-            hint = '<div class="dl-hint">qBittorrent is still discovering this torrent\'s metadata. '
-                 + 'If this takes more than a minute, click <b>boost</b> — we\'ll re-inject public trackers and force a reannounce.</div>';
+            hint = '<div class="dl-hint">Waiting for metadata. <b>Boost</b> adds trackers and retries peer discovery.</div>';
         } else if (d.state === 'stalledDL') {
             hint = '<div class="dl-hint">No peers connected. Try <b>Boost</b>, or pick a torrent with more seeders.</div>';
         } else if (d.state === 'error' || d.state === 'missingFiles') {

@@ -2,9 +2,7 @@
 {% block title %}Settings{% endblock %}
 
 {% block content %}
-<p class="eyebrow">Make yourself at home</p>
 <h1 class="page-title">Settings</h1>
-<p class="page-subtitle">Connections, preferences and maintenance.</p>
 
 <div class="card">
     <h2 class="card-title">General</h2>
@@ -12,7 +10,7 @@
         <div class="setting-row">
             <div class="setting-info">
                 <div class="setting-label">VPN bypass</div>
-                <div class="setting-desc">skip the VPN check before searching and downloading</div>
+                <div class="setting-desc">Skip the VPN check before searching and downloading.</div>
             </div>
             <label class="toggle">
                 <input type="checkbox" aria-label="VPN bypass" name="vpn_bypass" {% if vpn_bypass %}checked{% endif %}
@@ -25,7 +23,7 @@
 
 <div class="card">
     <h2 class="card-title">Network interface</h2>
-    <p class="page-subtitle" style="margin-bottom:12px">choose which interface / IP the server listens on. requires a restart to take effect.</p>
+    <p class="page-subtitle" style="margin-bottom:12px">Server listening address. Requires a restart.</p>
     <form method="POST" action="/advanced-settings" id="nic-form">
         <input type="hidden" name="vpn_bypass" value="{{ 'on' if vpn_bypass else '' }}">
         <div class="inline-form">
@@ -42,7 +40,7 @@
     <div class="setting-row">
         <div class="setting-info">
             <div class="setting-label">Fix Jellyfin directory</div>
-            <div class="setting-desc">run chown on /media for jellyfin access</div>
+            <div class="setting-desc">Set ownership of /media for Jellyfin access.</div>
         </div>
         <a href="/jellyfin" class="btn btn-sm">Run</a>
     </div>
